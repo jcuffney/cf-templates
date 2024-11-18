@@ -6,10 +6,10 @@
 
 #### Cloudformation Templates
 
-- [x] http-api-gateway
-- [x] rest-api-gateway
-- [x] static-spa-website
-- [x] ecs-cluster
+- [x] http-api-gateway // [README](src/http-api-gateway/README.md)
+- [x] rest-api-gateway // [README](src/rest-api-gateway/README.md)
+- [x] static-spa-website // [README](src/static-spa-website/README.md)
+- [x] ecs-cluster // [README](src/ecs-cluster/README.md)
  
 #### CI/CD
 

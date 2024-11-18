@@ -1,4 +1,4 @@
-# HTTP API Gateway 
+# HTTP API Gateway
 
 ```json
 {
