@@ -1,0 +1,61 @@
+{
+   "AWSTemplateFormatVersion": "2010-09-09",
+   "Parameters": {
+      "DomainName": {
+         "Type": "String",
+         "Description": "The domain name for the hosted zone"
+      },
+      "SSMNamespace": {
+         "Type": "String",
+         "Default": "/cuffney/dev/hosted-zone",
+         "Description": "The SSM Namespace"
+      }
+   },
+   "Resources": {
+      "HostedZone": {
+         "Type": "AWS::Route53::HostedZone",
+         "Properties": {
+            "Name": {
+               "Ref": "DomainName"
+            }
+         }
+      },
+      "HostedZoneIdParameter": {
+         "Type": "AWS::SSM::Parameter",
+         "Properties": {
+            "Name": {
+               "Fn::Join": [
+                  "",
+                  [
+                     {
+                        "Ref": "SSMNamespace"
+                     },
+                     "/hosted-zone-id"
+                  ]
+               ]
+            },
+            "Type": "String",
+            "Value": {
+               "Ref": "HostedZone"
+            }
+         }
+      }
+   },
+   "Outputs": {
+      "HostedZoneId": {
+         "Description": "The ID of the created hosted zone",
+         "Value": {
+            "Ref": "HostedZone"
+         }
+      },
+      "HostedZoneNameServers": {
+         "Description": "The name servers for the hosted zone",
+         "Value": {
+            "Fn::GetAtt": [
+               "HostedZone",
+               "NameServers"
+            ]
+         }
+      }
+   }
+}

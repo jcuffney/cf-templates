@@ -10,6 +10,14 @@
          "Type": "String",
          "Default": "v1",
          "Description": "The name of the stage"
+      },
+      "DomainName": {
+         "Type": "String",
+         "Description": "The custom domain name for the API"
+      },
+      "HostedZoneId": {
+         "Type": "String",
+         "Description": "The ID of the Route 53 hosted zone"
       }
    },
    "Resources": {
@@ -32,6 +40,81 @@
                "Ref": "StageName"
             },
             "AutoDeploy": true
+         }
+      },
+      "Certificate": {
+         "Type": "AWS::CertificateManager::Certificate",
+         "Properties": {
+            "DomainName": {
+               "Ref": "DomainName"
+            },
+            "ValidationMethod": "DNS",
+            "DomainValidationOptions": [
+               {
+                  "DomainName": {
+                     "Ref": "DomainName"
+                  },
+                  "HostedZoneId": {
+                     "Ref": "HostedZoneId"
+                  }
+               }
+            ]
+         }
+      },
+      "ApiDomainName": {
+         "Type": "AWS::ApiGatewayV2::DomainName",
+         "Properties": {
+            "DomainName": {
+               "Ref": "DomainName"
+            },
+            "DomainNameConfigurations": [
+               {
+                  "CertificateArn": {
+                     "Ref": "Certificate"
+                  },
+                  "EndpointType": "REGIONAL"
+               }
+            ]
+         }
+      },
+      "ApiMapping": {
+         "Type": "AWS::ApiGatewayV2::ApiMapping",
+         "Properties": {
+            "ApiId": {
+               "Ref": "HttpApi"
+            },
+            "DomainName": {
+               "Ref": "ApiDomainName"
+            },
+            "Stage": {
+               "Ref": "StageName"
+            }
+         }
+      },
+      "DNSRecord": {
+         "Type": "AWS::Route53::RecordSet",
+         "Properties": {
+            "HostedZoneId": {
+               "Ref": "HostedZoneId"
+            },
+            "Name": {
+               "Ref": "DomainName"
+            },
+            "Type": "A",
+            "AliasTarget": {
+               "DNSName": {
+                  "Fn::GetAtt": [
+                     "ApiDomainName",
+                     "RegionalDomainName"
+                  ]
+               },
+               "HostedZoneId": {
+                  "Fn::GetAtt": [
+                     "ApiDomainName",
+                     "RegionalHostedZoneId"
+                  ]
+               }
+            }
          }
       }
    },
