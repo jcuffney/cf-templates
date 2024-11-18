@@ -1,4 +1,4 @@
-## Static SPA Website
+## Static Website
 
 ```json
 {
@@ -6,7 +6,7 @@
         "Stack": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
-                "TemplateURL": "https://s3.amazonaws.com/com.cuffney.cf-templates/static-spa-website/template.json",
+                "TemplateURL": "https://s3.amazonaws.com/com.cuffney.cf-templates/static-website/template.json",
                 "Parameters": {
                     "HostedZoneName": "example.com",
                     "DomainName": "test.example.com"                   
@@ -23,7 +23,7 @@
         "Stack": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
-                "TemplateURL": "https://s3.amazonaws.com/com.cuffney.cf-templates/static-spa-website/template.json",
+                "TemplateURL": "https://s3.amazonaws.com/com.cuffney.cf-templates/static-website/template.json",
                 "Parameters": {
                     "HostedZoneName": "test.example.com",
                     "DomainName": "some.test.example.com"                   
