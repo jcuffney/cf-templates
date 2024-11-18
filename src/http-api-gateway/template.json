@@ -1,0 +1,46 @@
+{
+   "AWSTemplateFormatVersion": "2010-09-09",
+   "Parameters": {
+      "ApiName": {
+         "Type": "String",
+         "Default": "api-gateway",
+         "Description": "The name of the HTTP API"
+      },
+      "StageName": {
+         "Type": "String",
+         "Default": "v1",
+         "Description": "The name of the stage"
+      }
+   },
+   "Resources": {
+      "HttpApi": {
+         "Type": "AWS::ApiGatewayV2::Api",
+         "Properties": {
+            "Name": {
+               "Ref": "ApiName"
+            },
+            "ProtocolType": "HTTP"
+         }
+      },
+      "Stage": {
+         "Type": "AWS::ApiGatewayV2::Stage",
+         "Properties": {
+            "ApiId": {
+               "Ref": "HttpApi"
+            },
+            "StageName": {
+               "Ref": "StageName"
+            },
+            "AutoDeploy": true
+         }
+      }
+   },
+   "Outputs": {
+      "HttpApiUrl": {
+         "Description": "The URL of the HTTP API",
+         "Value": {
+            "Fn::Sub": "https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com/${StageName}"
+         }
+      }
+   }
+}

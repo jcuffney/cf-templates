@@ -1,0 +1,16 @@
+{
+	"Parameters": {
+		"BucketName": {
+			"Type": "String",
+            "Description": "the bucket name which holds the templetes"
+        }
+	},
+	"Resources": {
+		"Bucket": {
+			"Type": "AWS::S3::Bucket",
+			"Properties": {
+				"BucketName": { "Ref": "BucketName" }
+            }
+        }
+    }
+}
