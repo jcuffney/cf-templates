@@ -6,11 +6,11 @@
 
 #### Cloudformation Templates
 
-- [x] hosted-zone // [README](src/hosted-zone/README.md)
-- [x] http-api-gateway // [README](src/http-api-gateway/README.md)
-- [x] rest-api-gateway // [README](src/rest-api-gateway/README.md)
-- [x] static-spa-website // [README](src/static-spa-website/README.md)
-- [x] ecs-cluster // [README](src/ecs-cluster/README.md)
+- [x] [hosted-zone](src/hosted-zone/README.md)
+- [x] [http-api-gateway](src/http-api-gateway/README.md)
+- [x] [rest-api-gateway](src/rest-api-gateway/README.md)
+- [x] [static-spa-website](src/static-spa-website/README.md)
+- [x] [ecs-cluster](src/ecs-cluster/README.md)
  
 #### CI/CD
 
