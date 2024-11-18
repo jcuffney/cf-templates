@@ -18,9 +18,8 @@ jobs:
     
     - name: Set Variables
       run: |
-        echo "STACK_NAME = cf-templates" >> $GITHUB_ENV
-        echo "TEMPLATE = ./infra/template.json" >> $GITHUB_ENV
-        echo "REGION = us-east-1" >> $GITHUB_ENV
+        echo "STACK_NAME=cf-templates" >> $GITHUB_ENV
+        echo "TEMPLATE=./infra/template.json" >> $GITHUB_ENV
         echo "BUCKET_NAME = com.cuffney.cf-templates" >> $GITHUB_ENV
 
     - name: Configure AWS credentials
@@ -32,9 +31,10 @@ jobs:
 
     - name: Validate
       run: |
+        echo "TEMPLATE: $TEMPLATE"
         aws cloudformation validate-template \
               --template-body file://$TEMPLATE \
-              --region us-east-1
+              --region ${{ secrets.AWS_REGION }}
 
     - name: Deploy
       if: github.ref == 'refs/heads/main'
@@ -45,5 +45,5 @@ jobs:
               --no-fail-on-empty-changeset \
               --parameter-overrides \
                 BucketName=$BUCKET_NAME \
-              --region us-east-1
+              --region ${{ secrets.AWS_REGION }}
         aws s3 sync ./src s3://$BUCKET_NAME --delete
