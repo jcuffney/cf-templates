@@ -2,6 +2,8 @@
 
 > Reuseable cloud formation templates for various AWS services.  Meant to be building blocks for larger applications.
 
+![primary](https://github.com/github/docs/actions/workflows/primary.yml/badge.svg)
+
 #### Cloudformation Templates
 
 - [x] http-api-gateway
