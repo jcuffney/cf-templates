@@ -3,6 +3,7 @@
    "Parameters": {
       "DomainName": {
          "Type": "String",
+         "Default": "cuffney.com",
          "Description": "The domain name for the hosted zone"
       },
       "SSMNamespace": {
