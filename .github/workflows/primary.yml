@@ -14,8 +14,8 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
-    
+      uses: actions/checkout@v4.1.7
+      
     - name: Set Variables
       run: |
         echo "STACK_NAME=cf-templates" >> $GITHUB_ENV
