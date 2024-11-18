@@ -20,7 +20,7 @@ jobs:
       run: |
         echo "STACK_NAME=cf-templates" >> $GITHUB_ENV
         echo "TEMPLATE=./infra/template.json" >> $GITHUB_ENV
-        echo "BUCKET_NAME = com.cuffney.cf-templates" >> $GITHUB_ENV
+        echo "BUCKET_NAME=com.cuffney.cf-templates" >> $GITHUB_ENV
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -31,12 +31,11 @@ jobs:
 
     - name: Validate
       run: |
-        echo "TEMPLATE: $TEMPLATE"
         aws cloudformation validate-template \
               --template-body file://$TEMPLATE \
               --region ${{ secrets.AWS_REGION }}
 
-    - name: Deploy
+    - name: Deploy Infrastructure
       if: github.ref == 'refs/heads/main'
       run: |
         aws cloudformation deploy \
@@ -46,4 +45,8 @@ jobs:
               --parameter-overrides \
                 BucketName=$BUCKET_NAME \
               --region ${{ secrets.AWS_REGION }}
+
+    - name: Sync Templates
+      if: github.ref == 'refs/heads/main'
+      run: |
         aws s3 sync ./src s3://$BUCKET_NAME --delete
